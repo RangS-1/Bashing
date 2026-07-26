@@ -147,6 +147,13 @@ remote(){
     fi
 }
 
+automatic(){
+    check_branch
+    stages
+    commit
+    branch
+    pushing
+}
 
 show_menu(){
     echo "========================"
@@ -164,6 +171,7 @@ show_menu(){
     case "$SELECT" in
         "1")
             automatic
+            show_menu
             ;;
         "2")
             stages
