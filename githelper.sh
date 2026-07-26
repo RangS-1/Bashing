@@ -101,6 +101,24 @@ pulling(){
     git pull origin main
 }
 
+pushing(){
+    BRANCH=$(git branch --show-current)
+    echo
+    echo "[!] You are on $BRANCH branch!"
+    echo "[1] Back"
+    echo "[2] Push"
+    read -p "[!] Your Choice: " PUSHING
+    if [[ "$PUSHING" == "1" ]]; then
+        show_menu
+    elif [[ "$PUSHING" == "2" ]]; then
+        git push -u origin main
+        show_menu
+    else
+        echo "[!] Please Choose"
+        pushing
+    fi
+}
+
 show_menu(){
     echo "========================"
     echo "== Git Project Helper =="
@@ -139,16 +157,15 @@ show_menu(){
             show_menu
             ;;
         "7")
-           
+            pushing
+            show_menu
             ;;
         "8")
             clear
             show_menu
             ;;
         "9")
-            echo
-            echo "[✓] OK! See Ya!"
-            exit 1
+            
             ;;
         "10")
             clear
