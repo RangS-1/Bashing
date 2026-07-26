@@ -124,6 +124,30 @@ pushing(){
     fi
 }
 
+remote(){
+    BRANCH=$(git branch --show-current)
+    echo
+    echo "[!] You are on $BRANCH branch!"
+    echo "[1] Back          [3] Set URL"
+    echo "[2] New Remote"
+    read -p "[!] Your Choice: " REMOTES
+    if [[ "$REMOTES" == "1" ]]; then
+        show_menu
+    elif [[ "$REMOTES" == "2" ]]; then
+        read -p "[!] URL: " URL
+        git remote add origin "$URL"
+        show_menu
+    elif [[ "$REMOTES" == "3" ]]; then
+        read -p "[!] URL: " URL
+        git remote set-url origin "$URL"
+        show_menu
+    else
+        echo "[!] Please Choose"
+        pushing
+    fi
+}
+
+
 show_menu(){
     echo "========================"
     echo "== Git Project Helper =="
@@ -133,13 +157,13 @@ show_menu(){
     echo "[!] Please select task!"
     echo
     echo "[1] Auto Push         [5] Branch    [9] Remote"
-    echo "[2] Staged Files      [6] Merge      [10] Clear"
+    echo "[2] Staged Files      [6] Merge     [10] Clear"
     echo "[3] Unstaged Files    [7] Pull      [11] Exit"
     echo "[4] Commit            [8] Push"
     read -p "[!] Your Choice: " SELECT
     case "$SELECT" in
         "1")
-
+            automatic
             ;;
         "2")
             stages
@@ -170,7 +194,8 @@ show_menu(){
             show_menu
             ;;
         "9")
-            
+            remote
+            show_menu
             ;;
         "10")
             clear
