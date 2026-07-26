@@ -82,18 +82,23 @@ merge(){
     BRANCH=$(git branch --show-current)
     echo
     echo "[!] You are on $BRANCH branch!"
-    echo "[1] Back"
-    echo "[2] Merge Branch"
+    echo "[1] Back              [3] Change to Master"
+    echo "[2] Change to main    [4] Merge to Main"
     read -p "[!] Your Choice: " MERGING
     if [[ "$MERGING" == "1" ]]; then
         show_menu
     elif [[ "$MERGING" == "2" ]]; then
+        git branch -M main
+        merge
+    elif [[ "$MERGING" == "3" ]]; then
+        git branch -M main
+        merge
+    elif [[ "$MERGING" == "4" ]]; then
         read -p "[!] Branch Name: " MERGING
         git merge "$MERGING"
         show_menu
     else
         echo "[!] Please Choose"
-        merge
     fi
 }
 
@@ -128,9 +133,9 @@ show_menu(){
     echo "[!] Please select task!"
     echo
     echo "[1] Auto Push         [5] Branch    [9] Remote"
-    echo "[2] Staged Files      [6] Pull      [10] Clear"
-    echo "[3] Unstaged Files    [7] Push      [11] Exit"
-    echo "[4] Commit            [8] Merge"
+    echo "[2] Staged Files      [6] Merge      [10] Clear"
+    echo "[3] Unstaged Files    [7] Pull      [11] Exit"
+    echo "[4] Commit            [8] Push"
     read -p "[!] Your Choice: " SELECT
     case "$SELECT" in
         "1")
@@ -153,15 +158,15 @@ show_menu(){
             show_menu
             ;;
         "6")
-            pulling
+            merge
             show_menu
             ;;
         "7")
-            pushing
+            pulling
             show_menu
             ;;
         "8")
-            clear
+            pushing
             show_menu
             ;;
         "9")
