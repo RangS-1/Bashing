@@ -151,7 +151,6 @@ automatic(){
     check_branch
     stages
     commit
-    branch
     pushing
 }
 
