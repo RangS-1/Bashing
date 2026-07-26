@@ -78,6 +78,10 @@ branch(){
     fi
 }
 
+pulling(){
+    git pull origin main
+}
+
 show_menu(){
     echo "========================"
     echo "== Git Project Helper =="
