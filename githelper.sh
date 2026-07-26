@@ -6,19 +6,42 @@ check_branch(){
 }
 
 stages(){
+    ONSTAGES=$(git diff --name-only --staged .)
     echo
-    git diff --name-only --staged .
+    echo "[!] File in stages Area:"
+    echo "[!] $ONSTAGES"
+    echo
     echo "[1] Back" 
-    read -p "[!] File to Staged Area: " STAGE
+    read -p "[!] File to Staged: " STAGE
     if [[ "$STAGE" == "1" ]]; then
         show_menu
     else
         git add "$STAGE"
-        git status
+        git status | grep "modified"
+    fi
+}
+
+unstages(){
+    ONSTAGES=$(git diff --name-only --staged .)
+    echo
+    echo "[!] File in stages Area:"
+    echo "[!] $ONSTAGES"
+    echo
+    echo "[1] Back" 
+    read -p "[!] File to Unstaged: " STAGE
+    if [[ "$STAGE" == "1" ]]; then
+        show_menu
+    else
+        git restore --staged "$STAGE"
+        git status | grep "modified"
     fi
 }
 
 commit(){
+    ONSTAGES=$(git diff --name-only --staged .)
+    echo
+    echo "[!] File in stages Area:"
+    echo "[!] $ONSTAGES"
     echo
     echo "[1] Back" 
     read -p "[!] Commit Message: " COMMIT
@@ -39,7 +62,7 @@ show_menu(){
     echo
     echo "[1] Auto Push         [5] "
     echo "[2] Staged Files      [6]"
-    echo "[3] Unstaged Files    [7]"
+    echo "[3] Unstaged Files    [7] Clear"
     echo "[4] Commit            [8] Exit"
     read -p "[!] Your Choice: " SELECT
     case "$SELECT" in
@@ -65,7 +88,8 @@ show_menu(){
             
             ;;
         "7")
-            
+            clear
+            show_menu
             ;;
         "8")
             echo
