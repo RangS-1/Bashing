@@ -226,6 +226,27 @@ body {
     color: var(--color-text-primary);
 }
 
+/* Sudo badge to indicate scripts requiring root */
+.sudo-badge {
+    display: inline-block;
+    margin-left: 0.6rem;
+    padding: 0.08rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ff5f56;
+    background: rgba(255, 95, 86, 0.06);
+    border: 1px solid rgba(255,95,86,0.16);
+    border-radius: 6px;
+    line-height: 1;
+    vertical-align: middle;
+    transition: var(--transition-smooth);
+}
+
+.sudo-badge:hover {
+    background: rgba(255,95,86,0.12);
+}
+
 .card-body {
     flex-grow: 1;
     margin-bottom: 1.5rem;
