@@ -7,6 +7,7 @@ check_branch(){
 
 stages(){
     echo
+    git diff --name-only --staged .
     echo "[1] Back" 
     read -p "[!] File to Staged Area: " STAGE
     if [[ "$STAGE" == "1" ]]; then
@@ -36,16 +37,11 @@ show_menu(){
     echo
     echo "[!] Please select task!"
     echo
-    echo "[1] Auto Push"
-    echo "[2] Stages Area"
-    echo "[3] Commit"
-    echo "[4] Clean Journal"
-    echo "[5] Remove Old Downloads"
-    echo "[6] Disk Usage"
-    echo "[7] Clear Screen"
-    echo "[8] Exit"
+    echo "[1] Auto Push         [5] "
+    echo "[2] Staged Files      [6]"
+    echo "[3] Unstaged Files    [7]"
+    echo "[4] Commit            [8] Exit"
     read -p "[!] Your Choice: " SELECT
-
     case "$SELECT" in
         "1")
 
@@ -55,11 +51,12 @@ show_menu(){
             show_menu
             ;;
         "3")
-            commit
+            unstages
             show_menu
             ;;
         "4")
-            
+            commit
+            show_menu
             ;;
         "5")
             
