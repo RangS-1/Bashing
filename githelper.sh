@@ -78,6 +78,25 @@ branch(){
     fi
 }
 
+merge(){
+    BRANCH=$(git branch --show-current)
+    echo
+    echo "[!] You are on $BRANCH branch!"
+    echo "[1] Back"
+    echo "[2] Merge Branch"
+    read -p "[!] Your Choice: " MERGING
+    if [[ "$MERGING" == "1" ]]; then
+        show_menu
+    elif [[ "$MERGING" == "2" ]]; then
+        read -p "[!] Branch Name: " MERGING
+        git merge "$MERGING"
+        show_menu
+    else
+        echo "[!] Please Choose"
+        merge
+    fi
+}
+
 pulling(){
     git pull origin main
 }
@@ -90,10 +109,10 @@ show_menu(){
     echo
     echo "[!] Please select task!"
     echo
-    echo "[1] Auto Push         [5] Branch    [9] Exit"
-    echo "[2] Staged Files      [6] Push"
-    echo "[3] Unstaged Files    [7] Merge"
-    echo "[4] Commit            [8] Clear"
+    echo "[1] Auto Push         [5] Branch    [9] Remote"
+    echo "[2] Staged Files      [6] Pull      [10] Clear"
+    echo "[3] Unstaged Files    [7] Push      [11] Exit"
+    echo "[4] Commit            [8] Merge"
     read -p "[!] Your Choice: " SELECT
     case "$SELECT" in
         "1")
@@ -116,16 +135,26 @@ show_menu(){
             show_menu
             ;;
         "6")
-            
+            pulling
+            show_menu
             ;;
         "7")
-            
+           
             ;;
         "8")
             clear
             show_menu
             ;;
         "9")
+            echo
+            echo "[✓] OK! See Ya!"
+            exit 1
+            ;;
+        "10")
+            clear
+            show_menu
+            ;;
+        "11")
             echo
             echo "[✓] OK! See Ya!"
             exit 1
