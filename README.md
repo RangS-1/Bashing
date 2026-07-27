@@ -9,6 +9,8 @@ This repository contains several simple Bash scripts to help with everyday tasks
 - `sysmon.sh` — displays system information in real time
 - `updater.sh` — updates the Arch Linux system and AUR packages
 - `maintenance.sh` — provides a simple maintenance menu for updates, cache cleanup, journal cleanup, and old downloads removal
+- `githelper.sh` — provides an interactive Git helper for staging, committing, branching, merging, pushing, and remotes
+- `laravelarch.sh` — installs and configures a Laravel development stack on Arch Linux
 
 ## Prerequisites
 
@@ -19,11 +21,12 @@ Make sure your system already has:
 - `tar`
 - `sudo`
 
-For the monitoring and updater scripts, the following commands are also required:
+For the monitoring, updater, and Laravel setup scripts, the following commands are also required:
 
 - `free`, `df`, `uptime`, `ip`, `nmcli` for `sysmon.sh`
 - `pacman`, `yay`, `paccache` for `updater.sh`
 - `journalctl` for `maintenance.sh`
+- `composer`, `php`, `php-fpm`, `mariadb`, `nginx` for `laravelarch.sh`
 
 ## Installation with Git
 
@@ -32,14 +35,14 @@ If you want to download this repository from Git, run:
 ```bash
 git clone <repository-url>
 cd Bashing
-chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh
+chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh githelper.sh laravelarch.sh
 ```
 
 If you are already inside the local repository folder, you can simply run:
 
 ```bash
 cd /path/to/Bashing
-chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh
+chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh githelper.sh laravelarch.sh
 ```
 
 ## How to Use
@@ -112,12 +115,30 @@ You can choose options to:
 - remove old files from Downloads
 - check disk usage
 
+### 6. Git Helper
+
+This script provides an interactive menu for common Git tasks such as staging, unstaging, committing, branching, merging, setting remotes, and pushing.
+
+```bash
+./githelper.sh
+```
+
+### 7. Laravel Arch Setup
+
+This script installs and configures a Laravel application stack on Arch Linux, including `nginx`, `php`, `php-fpm`, `mariadb`, and `composer`.
+
+```bash
+sudo ./laravelarch.sh
+```
+
 ## Folder Structure
 
 ```text
 Bashing/
 ├── docs/
 ├── backup.sh
+├── githelper.sh
+├── laravelarch.sh
 ├── maintenance.sh
 ├── projectgenerator.sh
 ├── sysmon.sh
