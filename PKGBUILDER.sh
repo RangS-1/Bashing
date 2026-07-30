@@ -2,8 +2,8 @@
 
 create_pkgbuild(){
     read -p "pkgname: " $PKGNAME
-    cat << EOF > PKGBUILDTEST
-# Maintainer: RangS-1 <rangga19sj@gmail.com>
+    cat << EOF > PKGBUILD
+# Maintainer: 
 pkgname=
 _repo=
 pkgver=1.0.0
@@ -33,4 +33,20 @@ package() {
 EOF
 }
 
-create_pkgbuild
+run_namcap(){
+    read -p "Would you like to use namcap(Y/n)? " RUNIT
+    if [[ "$RUNIT" == "Y" || "$RUNIT" == "y" ]]; then
+        namcap PKGBUILD
+    elif [[ "$RUNIT" == "N" || "$RUNIT" == "n" ]]; then
+        echo "[X] Skip."
+    else
+        run_namcap
+    fi
+}
+
+start(){
+    create_pkgbuild
+    run_namcap
+}
+
+start
