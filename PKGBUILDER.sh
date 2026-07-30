@@ -19,27 +19,40 @@ check_pkgbuild(){
 }
 
 create_pkgbuild(){
-    read -p "pkgname: " $PKGNAME
-    cat << EOF > PKGBUILD
-# Maintainer: 
-pkgname=
-_repo=
-pkgver=1.0.0
-pkgrel=1
-pkgdesc="Nothing here"
-arch=('any')
-url=""
-license=('')
+    read -rp "[!] maintainer     : " MAINTAINER
+    read -rp "[!] pkgname        : " PKGNAME
+    read -rp "[!] repository     : " REPOSITORY
+    read -rp "[!] version(v1.0.0): " VERSION
+    read -rp "[!] pkgrel(1)      : " PKGREL
+    read -rp "[!] description    : " DESCRIPTION
+    read -rp "[!] arch(any)      : " ARCH
+    read -rp "[!] url            : " URL
+    read -rp "[!] license(MIT)   : " LICENSE
+    read -rp "[!] dependency     : " DEPENDENCY
+    read -rp "[!] make dependency: " MAKEDEPENDS
+    read -rp "[!] source         : " SOURCE
+    read -rp "[!] sha256sum      : " SHA
 
-depends=()
+    cat << EOF > PKGBUILDTEST
+# Maintainer: $MAINTAINER
+pkgname=$PKGNAME
+_repo=$REPOSITORY
+pkgver=$VERSION
+pkgrel=$PKGREL
+pkgdesc="$DESCRIPTION"
+arch=('$ARCH')
+url="$URL"
+license=('$LICENSE')
 
-makedepends=()
+depends=($DEPENDENCY)
+
+makedepends=($MAKEDEPENDS)
 
 source=(
-    "$pkgname-$pkgver.tar.gz::https://github.com/RangS-1/${_repo}/archive/refs/tags/v$pkgver.tar.gz"
+    "$SOURCE"
 )
 
-sha256sums=('')
+sha256sums=('$SHA')
 
 build() {
 
@@ -49,6 +62,21 @@ package() {
 
 }
 EOF
+    if [[ $VERSION = "" ]]; then
+        sed -i "s/^pkgver=.*/pkgver=1.0.0/" PKGBUILD
+    fi
+
+    if [[ $PKGREL = "" ]]; then
+        sed -i "s/^pkgrel=.*/pkgrel=1/" PKGBUILD
+    fi
+
+    if [[ $ARCH = "" ]]; then
+        sed -i "s/^arch=.*/arch=('any')/" PKGBUILD
+    fi
+
+    if [[ $LICENSE = "" ]]; then
+        sed -i "s/^license=.*/license=('MIT')/" PKGBUILD
+    fi
 }
 
 run_namcap(){
@@ -67,5 +95,4 @@ start(){
     run_namcap
 }
 
-check_pkgbuild
 start
