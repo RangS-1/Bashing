@@ -104,6 +104,28 @@ EOF
     echo "[✓] Create PKGBBUILD with Rust Build"
 }
 
+go_build(){
+    cat << EOF >> PKGBUILD
+build() {
+    cd "$_repo"
+
+    go build \
+        -trimpath \
+        -buildmode=pie \
+        -mod=readonly \
+        -modcacherw \
+        -o "$pkgname"
+}
+
+package() {
+    install -Dm755 \
+        "$_repo/$pkgname" \
+        "$pkgdir/usr/bin/$pkgname"
+}
+EOF
+    echo "[✓] Create PKGBBUILD with Go Build"
+}
+
 choose_build(){
     printf "[1] Python    [3] Go\n"
     printf "[2] Rust      [4] Cmake (C/C++)\n"
