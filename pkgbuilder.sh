@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 check_pkgbuild(){
     if [ -f "PKGBUILD" ]; then
@@ -13,7 +13,7 @@ check_pkgbuild(){
             check_pkgbuild
         fi
     else
-        echo "[✓] PKGBUILD is not there!"
+        printf "[✓] PKGBUILD is not there!\n"
         start
     fi
 }
@@ -22,12 +22,12 @@ create_pkgbuild(){
     read -rp "[!] maintainer     : " MAINTAINER
     read -rp "[!] pkgname        : " PKGNAME
     read -rp "[!] repository     : " REPOSITORY
-    read -rp "[!] version(v1.0.0): " VERSION
-    read -rp "[!] pkgrel(1)      : " PKGREL
+    read -rp "[!] version[v1.0.0]: " VERSION
+    read -rp "[!] pkgrel      [1]: " PKGREL
     read -rp "[!] description    : " DESCRIPTION
     read -rp "[!] arch(any)      : " ARCH
     read -rp "[!] url            : " URL
-    read -rp "[!] license(MIT)   : " LICENSE
+    read -rp "[!] license   [MIT]: " LICENSE
     read -rp "[!] dependency     : " DEPENDENCY
     read -rp "[!] make dependency: " MAKEDEPENDS
     read -rp "[!] source         : " SOURCE
@@ -37,12 +37,12 @@ create_pkgbuild(){
 # Maintainer: $MAINTAINER
 pkgname=$PKGNAME
 _repo=$REPOSITORY
-pkgver=$VERSION
-pkgrel=$PKGREL
+pkgver=${VERSION:-1.0.0}
+pkgrel=${PKGREL:-1}
 pkgdesc="$DESCRIPTION"
-arch=('$ARCH')
+arch=${ARCH:-('any')}
 url="$URL"
-license=('$LICENSE')
+license=${LICENSE:-('MIT')}
 
 depends=($DEPENDENCY)
 
@@ -62,21 +62,6 @@ package() {
 
 }
 EOF
-    if [[ $VERSION = "" ]]; then
-        sed -i "s/^pkgver=.*/pkgver=1.0.0/" PKGBUILD
-    fi
-
-    if [[ $PKGREL = "" ]]; then
-        sed -i "s/^pkgrel=.*/pkgrel=1/" PKGBUILD
-    fi
-
-    if [[ $ARCH = "" ]]; then
-        sed -i "s/^arch=.*/arch=('any')/" PKGBUILD
-    fi
-
-    if [[ $LICENSE = "" ]]; then
-        sed -i "s/^license=.*/license=('MIT')/" PKGBUILD
-    fi
 }
 
 run_namcap(){
