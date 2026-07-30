@@ -68,7 +68,51 @@ run_namcap(){
     fi
 }
 
+python_build(){
+    cat << EOF >> PKGBUILD
+build() {
+    cd "$_repo"
+
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$_repo"
+
+    python -m installer \
+        --destdir="$pkgdir" \
+        dist/*.whl
+}
+EOF
+    echo "[✓] Create PKGBBUILD with Python Build"
+}
+
+choose_build(){
+    printf "[1] Python    [3] Go\n"
+    printf "[2] Rust      [4] Cmake (C/C++)\n"
+    read -rp "[!] Choose Build: " BUILD
+
+    case "$BUILD" in
+        "1")
+            python_build    
+            ;;
+        "2")
+            rust_build
+            ;;
+        "3")
+            go_build
+            ;;
+        "4")
+            cmake_build
+            ;;
+        *)
+            choose_build
+            ;;
+    esac
+}
+
 start(){
+    choose_build
     run_namcap
 }
 
