@@ -33,7 +33,7 @@ create_pkgbuild(){
     read -rp "[!] source         : " SOURCE
     read -rp "[!] sha256sum      : " SHA
 
-    cat << EOF > PKGBUILDTEST
+    cat << EOF > PKGBUILD
 # Maintainer: $MAINTAINER
 pkgname=$PKGNAME
 _repo=$REPOSITORY
