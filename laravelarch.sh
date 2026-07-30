@@ -49,6 +49,17 @@ configure_database(){
     php artisan migrate
 }
 
+run_laravel(){
+    read -p "Would you like to Start the server (Y/n)? " RUNIT
+    if [[ "$RUNIT" == "Y" || "$RUNIT" == "y" ]]; then
+        php artisan serve
+    elif [[ "$RUNIT" == "N" || "$RUNIT" == "n" ]]; then
+        echo "[X] Skip."
+    else
+        run_laravel
+    fi
+}
+
 start(){
     for pkg in "${PACKAGE[@]}"; do
         if ! pacman -Qi "$pkg" >/dev/null 2>&1; then
@@ -60,6 +71,7 @@ start(){
     start_nginx
     makelaravel
     configure_database
+    run_laravel
 }
 
 start
