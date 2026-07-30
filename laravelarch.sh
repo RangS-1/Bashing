@@ -6,6 +6,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 PACKAGE=("nginx" "php" "php-fpm" "composer" "mariadb" "nodejs" "npm")
+install_packages(){
+    pacman -S --needed "${PACKAGE[@]}"
+}
 
 configure_mariadb(){
     mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
