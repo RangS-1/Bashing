@@ -2,7 +2,7 @@
 
 check_pkgbuild(){
     if [ -f "PKGBUILD" ]; then
-    	echo "[!] PKGBUILD was found!"
+    	echo -e "\e[35m[!]\e[0m PKGBUILD was found!"
     	read -p "Would you like to overwrite PKGBUILD? " CHECK
         if [[ "$CHECK" == "Y" || "$CHECK" == "y" ]]; then
             create_pkgbuild
@@ -13,27 +13,27 @@ check_pkgbuild(){
             check_pkgbuild
         fi
     else
-        printf "[✓] PKGBUILD is not there!\n"
+        printf "\e[32m[✓]\e[0m PKGBUILD is not there!\n"
         create_pkgbuild
     fi
 }
 
 create_pkgbuild(){
-    read -rp "[!] maintainer     : " MAINTAINER
-    read -rp "[!] pkgname        : " PKGNAME
-    read -rp "[!] repository     : " REPOSITORY
-    read -rp "[!] version[v1.0.0]: " VERSION
-    read -rp "[!] pkgrel      [1]: " PKGREL
-    read -rp "[!] description    : " DESCRIPTION
-    read -rp "[!] arch(any)      : " ARCH
-    read -rp "[!] url            : " URL
-    read -rp "[!] license   [MIT]: " LICENSE
-    read -rp "[!] dependency     : " DEPENDENCY
-    read -rp "[!] make dependency: " MAKEDEPENDS
-    read -rp "[!] source         : " SOURCE
-    read -rp "[!] sha256sum      : " SHA
+    read -rp "$(echo -e "\e[35m[!]\e[0m") maintainer     : " MAINTAINER
+    read -rp "$(echo -e "\e[35m[!]\e[0m") pkgname        : " PKGNAME
+    read -rp "$(echo -e "\e[35m[!]\e[0m") repository     : " REPOSITORY
+    read -rp "$(echo -e "\e[35m[!]\e[0m") version[v1.0.0]: " VERSION
+    read -rp "$(echo -e "\e[35m[!]\e[0m") pkgrel      [1]: " PKGREL
+    read -rp "$(echo -e "\e[35m[!]\e[0m") description    : " DESCRIPTION
+    read -rp "$(echo -e "\e[35m[!]\e[0m") arch(any)      : " ARCH
+    read -rp "$(echo -e "\e[35m[!]\e[0m") url            : " URL
+    read -rp "$(echo -e "\e[35m[!]\e[0m") license   [MIT]: " LICENSE
+    read -rp "$(echo -e "\e[35m[!]\e[0m") dependency     : " DEPENDENCY
+    read -rp "$(echo -e "\e[35m[!]\e[0m") make dependency: " MAKEDEPENDS
+    read -rp "$(echo -e "\e[35m[!]\e[0m") source         : " SOURCE
+    read -rp "$(echo -e "\e[35m[!]\e[0m") sha256sum      : " SHA
 
-    echo "[!] Make PKGBUILD..."
+    echo -e "\e[35m[!]\e[0m Make PKGBUILD..."
     cat << EOF > PKGBUILD
 # Maintainer: $MAINTAINER
 pkgname=$PKGNAME
@@ -58,11 +58,12 @@ EOF
 }
 
 run_namcap(){
-    read -p "[!] Would you like to use namcap(Y/n)? " RUNIT
+    echo -e -n "\e[35m[!]\e[0m Would you like to use namcap(Y/n)? "
+    read RUNIT
     if [[ "$RUNIT" == "Y" || "$RUNIT" == "y" ]]; then
         namcap PKGBUILD
     elif [[ "$RUNIT" == "N" || "$RUNIT" == "n" ]]; then
-        echo "[X] Skip."
+        echo -e "\e[31m[X]\e[0m Skip namcap check..."
     else
         run_namcap
     fi
@@ -84,7 +85,7 @@ package() {
         dist/*.whl
 }
 EOF
-    echo "[✓] Create PKGBBUILD with Python Build"
+    echo -e "\e[32m[✓]\e[0m Create PKGBBUILD with Python Build"
 }
 
 rust_build(){
@@ -101,7 +102,7 @@ package() {
         "$pkgdir/usr/bin/$pkgname"
 }
 EOF
-    echo "[✓] Create PKGBBUILD with Rust Build"
+    echo -e "\e[32m[✓]\e[0m Create PKGBBUILD with Rust Build"
 }
 
 go_build(){
@@ -123,7 +124,7 @@ package() {
         "$pkgdir/usr/bin/$pkgname"
 }
 EOF
-    echo "[✓] Create PKGBBUILD with Go Build"
+    echo -e "\e[32m[✓]\e[0m Create PKGBBUILD with Go Build"
 }
 
 cmake_build(){
@@ -143,13 +144,14 @@ package() {
         cmake --install build
 }
 EOF
-    echo "[✓] Create PKGBBUILD with Cmake Build"
+    echo -e "\e[32m[✓]\e[0m Create PKGBBUILD with Cmake Build"
 }
 
 choose_build(){
+    echo
     printf "[1] Python    [3] Go\n"
     printf "[2] Rust      [4] Cmake (C/C++)\n"
-    read -rp "[!] Choose Build: " BUILD
+    read -rp "$(echo -e "\e[35m[!]\e[0m") Choose Build: " BUILD
 
     case "$BUILD" in
         "1")
