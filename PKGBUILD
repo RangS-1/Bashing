@@ -38,4 +38,7 @@ package() {
 
     install -Dm644 README.md \
         "$pkgdir/usr/share/doc/$pkgname/README.md"
+
+    install -Dm644 LICENSE \
+        "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
