@@ -10,6 +10,31 @@ license=('MIT')
 
 depends=(
     bash
+    git
+    sudo
+    pacman
+    pacman-contrib
+    networkmanager
+    iproute2
+    iputils
+    procps-ng
+    coreutils
+    findutils
+    gawk
+    grep
+    sed
+    tar
+    gzip
+    systemd
+    shadow
+    mariadb
+    php
+    php-fpm
+    composer
+    nginx
+    nodejs
+    npm
+    yay
 )
 
 makedepends=(
