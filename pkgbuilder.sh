@@ -5,7 +5,7 @@ check_pkgbuild(){
     	echo "[!] PKGBUILD was found!"
     	read -p "Would you like to overwrite PKGBUILD? " CHECK
         if [[ "$CHECK" == "Y" || "$CHECK" == "y" ]]; then
-            start
+            create_pkgbuild
         elif [[ "$CHECK" == "N" || "$CHECK" == "n" ]]; then
             echo "[X] Cancelling..."
             exit 1
@@ -14,7 +14,7 @@ check_pkgbuild(){
         fi
     else
         printf "[✓] PKGBUILD is not there!\n"
-        start
+        create_pkgbuild
     fi
 }
 
@@ -69,8 +69,8 @@ run_namcap(){
 }
 
 start(){
-    create_pkgbuild
     run_namcap
 }
 
+check_pkgbuild
 start
