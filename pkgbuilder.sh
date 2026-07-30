@@ -87,6 +87,23 @@ EOF
     echo "[✓] Create PKGBBUILD with Python Build"
 }
 
+rust_build(){
+    cat << EOF >> PKGBUILD
+build() {
+    cd "$_repo"
+
+    cargo build --release --locked
+}
+
+package() {
+    install -Dm755 \
+        "$_repo/target/release/$pkgname" \
+        "$pkgdir/usr/bin/$pkgname"
+}
+EOF
+    echo "[✓] Create PKGBBUILD with Rust Build"
+}
+
 choose_build(){
     printf "[1] Python    [3] Go\n"
     printf "[2] Rust      [4] Cmake (C/C++)\n"
