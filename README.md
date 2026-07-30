@@ -1,137 +1,133 @@
 # Bashing
 
-This repository contains several simple Bash scripts to help with everyday tasks, such as backing up folders, generating project templates, monitoring the system, and updating an Arch Linux system.
+This repository contains a collection of Bash scripts for everyday system administration and development tasks on Linux, especially for Arch-based systems.
 
-## Script List
+## Scripts Included
 
-- `backup.sh` — creates a backup of a folder in `.tar.gz` format
-- `projectgenerator.sh` — creates web or Python project structures automatically
-- `sysmon.sh` — displays system information in real time
-- `updater.sh` — updates the Arch Linux system and AUR packages
-- `maintenance.sh` — provides a simple maintenance menu for updates, cache cleanup, journal cleanup, and old downloads removal
-- `githelper.sh` — provides an interactive Git helper for staging, committing, branching, merging, pushing, and remotes
-- `laravelarch.sh` — installs and configures a Laravel development stack on Arch Linux
+- `backup.sh` — creates a backup of a chosen folder into the home backup directory as a `.tar.gz` archive.
+- `updater.sh` — checks connectivity and runs system updates, AUR updates, and optional cache cleanup.
+- `sysmon.sh` — displays system status such as RAM usage, disk usage, battery, network, IP, and uptime.
+- `projectgenerator.sh` — creates starter project templates for web or Python projects.
+- `maintenance.sh` — interactive maintenance menu for update checks, cache cleanup, journal cleanup, removing old downloads, and disk usage checks.
+- `githelper.sh` — interactive helper for common Git operations such as staging, unstaging, committing, branching, merging, pushing, and managing remotes.
+- `laravelarch.sh` — installs and configures a Laravel development stack using `nginx`, `php`, `php-fpm`, `mariadb`, `composer`, and related services.
+- `nuser.sh` — creates a new system user with sudo access and a Bash shell.
+- `pkgbuilder.sh` — interactive helper to create or update a `PKGBUILD` file.
 
 ## Prerequisites
 
-Make sure your system already has:
+Most scripts require Bash and basic core utilities. Depending on the script, you may also need:
 
-- `Bash`
-- `git`
-- `tar`
-- `sudo`
-
-For the monitoring, updater, and Laravel setup scripts, the following commands are also required:
-
-- `free`, `df`, `uptime`, `ip`, `nmcli` for `sysmon.sh`
-- `pacman`, `yay`, `paccache` for `updater.sh`
-- `journalctl` for `maintenance.sh`
+- `git` for `githelper.sh`
+- `pacman`, `paccache`, `yay`, `sudo` for `updater.sh` and `maintenance.sh`
+- `nmcli`, `df`, `free`, `ip`, `uptime` for `sysmon.sh`
 - `composer`, `php`, `php-fpm`, `mariadb`, `nginx` for `laravelarch.sh`
+- `useradd`, `passwd` for `nuser.sh`
 
-## Installation with Git
+## Installation
 
-If you want to download this repository from Git, run:
+### From Git
+
+Clone the repository and make the scripts executable:
 
 ```bash
 git clone <repository-url>
 cd Bashing
-chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh githelper.sh laravelarch.sh
+chmod +x *.sh
 ```
 
-If you are already inside the local repository folder, you can simply run:
+If you are already inside the repository folder, you can run:
 
 ```bash
-cd /path/to/Bashing
-chmod +x backup.sh projectgenerator.sh sysmon.sh updater.sh maintenance.sh githelper.sh laravelarch.sh
+chmod +x *.sh
 ```
 
-## How to Use
+### From AUR (yay)
 
-### 1. Backup a Folder
+```bash
+yay -S bashing
+```
 
-This script creates a backup of the folder you choose into the `$HOME/backup` directory.
+### From AUR (paru)
+
+```bash
+paru -S bashing
+```
+
+## Usage
+
+### 1. Backup a folder
 
 ```bash
 ./backup.sh
 ```
 
-Then enter the folder path you want to back up when prompted.
+Enter the folder path when prompted.
 
-### 2. Create Projects Automatically
-
-This script can create web or Python project templates.
-
-#### Web Template
-
-```bash
-./projectgenerator.sh web project-name
-```
-
-#### Python Template
-
-```bash
-./projectgenerator.sh python project-name
-```
-
-### 3. System Monitor
-
-This script displays RAM, disk, battery, network, IP, and uptime information periodically.
-
-```bash
-./sysmon.sh
-```
-
-This script will keep running and refresh the display every 2 seconds. Press `Ctrl+C` to stop it.
-
-### 4. Update an Arch Linux System
-
-This script will:
-
-1. Check internet connectivity
-2. Run `pacman -Syu`
-3. Run AUR updates with `yay`
-4. Ask whether to clear the cache
-
-```bash
-./updater.sh
-```
-
-> This script is suitable for Arch Linux systems where `yay` is already installed.
-
-### 5. Maintenance Menu
-
-This script provides a simple interactive menu for common maintenance tasks.
-
-```bash
-./maintenance.sh
-```
-
-You can choose options to:
-
-- run a full maintenance routine
-- update system or AUR packages
-- clean package cache
-- clear old journal logs
-- remove old files from Downloads
-- check disk usage
-
-### 6. Git Helper
-
-This script provides an interactive menu for common Git tasks such as staging, unstaging, committing, branching, merging, setting remotes, and pushing.
+### 2. Git helper
 
 ```bash
 ./githelper.sh
 ```
 
-### 7. Laravel Arch Setup
+Use the menu to manage Git actions interactively.
 
-This script installs and configures a Laravel application stack on Arch Linux, including `nginx`, `php`, `php-fpm`, `mariadb`, and `composer`.
+### 3. Laravel setup on Arch Linux
 
 ```bash
 sudo ./laravelarch.sh
 ```
 
-## Folder Structure
+This script installs and configures the required services and then helps create a Laravel project.
+
+### 4. Maintenance menu
+
+```bash
+./maintenance.sh
+```
+
+Choose from update, cleanup, journal, and download management tasks.
+
+### 5. Create a new user
+
+```bash
+sudo ./nuser.sh
+```
+
+The script will ask for a username and create the account.
+
+### 6. Create a PKGBUILD
+
+```bash
+./pkgbuilder.sh
+```
+
+This interactive script helps generate a `PKGBUILD` file for packaging.
+
+### 7. Generate project templates
+
+```bash
+./projectgenerator.sh web project-name
+./projectgenerator.sh python project-name
+```
+
+### 8. Monitor system status
+
+```bash
+./sysmon.sh
+```
+
+The script refreshes every 2 seconds until you stop it with `Ctrl+C`.
+
+### 9. Update the system
+
+```bash
+./updater.sh
+```
+
+This script checks internet connectivity, updates system packages, optionally updates AUR packages, and can clean the package cache.
+
+## Repository Structure
 
 ```text
 Bashing/
@@ -140,17 +136,21 @@ Bashing/
 ├── githelper.sh
 ├── laravelarch.sh
 ├── maintenance.sh
+├── nuser.sh
+├── pkgbuilder.sh
 ├── projectgenerator.sh
 ├── sysmon.sh
-└── updater.sh
+├── updater.sh
+├── PKGBUILD
+└── README.md
 ```
 
-## Tips
+## Notes
 
-- Run the scripts from this repository folder, or use the full path if you want to run them from another location.
-- If you encounter execution permission errors, run `chmod +x` as shown above.
-- For safety, make sure you understand the contents of a script before running it.
+- Run scripts from the repository folder or use their full path.
+- If you get permission errors, run `chmod +x` again.
+- Some scripts are intended for Arch Linux or require root privileges. Review them before running them on your system.
 
 ## Contribution
 
-If you want to develop this repository further, please fork the repository, create a new branch, and submit a pull request.
+Feel free to improve the scripts or add new helpers. Fork the repository, create a branch, and submit a pull request if you want to contribute.
