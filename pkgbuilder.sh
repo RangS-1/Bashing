@@ -33,6 +33,7 @@ create_pkgbuild(){
     read -rp "[!] source         : " SOURCE
     read -rp "[!] sha256sum      : " SHA
 
+    echo "[!] Make PKGBUILD..."
     cat << EOF > PKGBUILD
 # Maintainer: $MAINTAINER
 pkgname=$PKGNAME
@@ -49,18 +50,10 @@ depends=($DEPENDENCY)
 makedepends=($MAKEDEPENDS)
 
 source=(
-    "$SOURCE"
+    "$PKGNAME-$PKGVER.tar.gz::$URL"
 )
 
 sha256sums=('$SHA')
-
-build() {
-
-}
-
-package() {
-
-}
 EOF
 }
 
