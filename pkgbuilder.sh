@@ -126,6 +126,26 @@ EOF
     echo "[✓] Create PKGBBUILD with Go Build"
 }
 
+cmake_build(){
+    cat << EOF >> PKGBUILD
+build() {
+    cmake \
+        -B build \
+        -S "$_repo" \
+        -DCMAKE_BUILD_TYPE=None \
+        -DCMAKE_INSTALL_PREFIX=/usr
+
+    cmake --build build
+}
+
+package() {
+    DESTDIR="$pkgdir" \
+        cmake --install build
+}
+EOF
+    echo "[✓] Create PKGBBUILD with Cmake Build"
+}
+
 choose_build(){
     printf "[1] Python    [3] Go\n"
     printf "[2] Rust      [4] Cmake (C/C++)\n"
