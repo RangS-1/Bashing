@@ -12,7 +12,7 @@ depends=(
     bash
     git
     sudo
-    pacman
+    less
     pacman-contrib
     networkmanager
     iproute2
@@ -45,7 +45,7 @@ source=(
     "$pkgname-$pkgver.tar.gz::https://github.com/RangS-1/${_repo}/archive/refs/tags/v$pkgver.tar.gz"
 )
 
-sha256sums=('SKIP')
+sha256sums=('d2915fee3eddc24279e276162418321c6438c7b7701cb87ae248bfb3c67f97cd')
 
 package() {
     cd "$srcdir/${_repo}-${pkgver}"
