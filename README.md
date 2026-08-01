@@ -13,6 +13,7 @@ This repository contains a collection of Bash scripts for everyday system admini
 - `laravelarch.sh` — installs and configures a Laravel development stack using `nginx`, `php`, `php-fpm`, `mariadb`, `composer`, and related services.
 - `nuser.sh` — creates a new system user with sudo access and a Bash shell.
 - `pkgbuilder.sh` — interactive helper to create or update a `PKGBUILD` file.
+- `killuser.sh` —  delete/remove/kill user via input.
 
 ## Prerequisites
 
@@ -149,6 +150,7 @@ Bashing/
 ├── projectgenerator.sh
 ├── sysmon.sh
 ├── updater.sh
+├── killuser.sh
 ├── PKGBUILD
 └── README.md
 ```
