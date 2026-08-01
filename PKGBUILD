@@ -1,7 +1,7 @@
 # Maintainer: RangS-1 <rangga19sj@gmail.com>
 pkgname=bashing
 _repo=Bashing
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=1
 pkgdesc="Bash Scripting, such as laravel environment, githelper and more"
 arch=('any')
@@ -45,7 +45,7 @@ source=(
     "$pkgname-$pkgver.tar.gz::https://github.com/RangS-1/${_repo}/archive/refs/tags/v$pkgver.tar.gz"
 )
 
-sha256sums=('b60604a1852db62662c3f08badf3ef1f4dc4b9928d42c201e362d88fa820b6a3')
+sha256sums=('SKIP')
 
 package() {
     cd "$srcdir/${_repo}-${pkgver}"
