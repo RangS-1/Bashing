@@ -127,6 +127,14 @@ The script refreshes every 2 seconds until you stop it with `Ctrl+C`.
 
 This script checks internet connectivity, updates system packages, optionally updates AUR packages, and can clean the package cache.
 
+### 10. Kill User
+
+```bash
+./killuser.sh
+```
+
+This script checks different user and kill them with your confirmation.
+
 ## Repository Structure
 
 ```text
