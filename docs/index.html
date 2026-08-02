@@ -29,6 +29,35 @@
             <div class="terminal-title">rangs@archlinux: ~/bashing</div>
         </header>
 
+        <!-- Top Terminal Navigation & Search Bar -->
+        <nav class="terminal-navbar">
+            <div class="nav-left">
+                <div class="nav-brand">
+                    <i data-lucide="terminal" class="brand-icon"></i>
+                    <span class="brand-name"><span class="brand-slash">./</span>Bashing</span>
+                </div>
+                <div class="filter-pills" role="tablist" aria-label="Filter Scripts">
+                    <button class="filter-pill active" data-filter="all" title="Show All Scripts">
+                        <i data-lucide="layers"></i> All (<span id="count-all">10</span>)
+                    </button>
+                    <button class="filter-pill" data-filter="sudo" title="Scripts That Require Sudo">
+                        <i data-lucide="shield-alert"></i> Sudo (<span id="count-sudo">4</span>)
+                    </button>
+                    <button class="filter-pill" data-filter="user" title="Scripts Without Sudo">
+                        <i data-lucide="user"></i> User (<span id="count-user">6</span>)
+                    </button>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box-wrapper">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="script-search" class="search-input" placeholder="Search script (e.g. updater, sudo, sysmon)..." autocomplete="off" spellcheck="false">
+                    <button id="search-clear-btn" class="search-clear-btn hidden" aria-label="Clear Search" title="Clear search">&times;</button>
+                    <kbd class="search-shortcut-hint" title="Press '/' to search">/</kbd>
+                </div>
+            </div>
+        </nav>
+
         <!-- Main Content Area -->
         <main class="main-content">
             <!-- Header Section -->
@@ -39,12 +68,16 @@
                 </div>
                 <h1 class="main-title">Bashing</h1>
                 <p id="typewriter-subtitle" class="main-subtitle">Bash Script project by RangS</p>
-                <div class="terminal-divider"></div>
+                
+                <div class="search-results-bar">
+                    <div class="terminal-divider"></div>
+                    <span id="results-counter" class="results-counter">Show <strong id="visible-count">10</strong> script bash</span>
+                </div>
             </section>
 
             <!-- Cards Section (Bash Scripts Grid) -->
-            <section class="cards-grid">
-                <article class="script-card">
+            <section class="cards-grid" id="cards-grid">
+                <article class="script-card" data-name="backup.sh" data-sudo="false" data-keywords="backup folder archive compress home script automate">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">backup.sh</span>
@@ -61,10 +94,10 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="updater.sh" data-sudo="true" data-keywords="updater arch linux pacman aur system upgrade clean cache sudo root">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
-                        <span class="script-name">updater.sh</span>
+                        <span class="script-name">updater.sh <span class="sudo-badge">sudo</span></span>
                     </div>
                     <div class="card-body">
                         <p class="script-desc">Script to automate update on Arch Linux system, complete with system update, AUR update and clean cache.</p>
@@ -78,7 +111,7 @@
                     </div>
                 </article>
                 
-                <article class="script-card">
+                <article class="script-card" data-name="sysmon.sh" data-sudo="false" data-keywords="sysmon system monitoring real-time cpu ram disk battery network status ip address uptime monitor">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">sysmon.sh</span>
@@ -95,7 +128,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="projectgenerator.sh" data-sudo="false" data-keywords="projectgenerator project generator app structure template website python automate">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">projectgenerator.sh</span>
@@ -104,7 +137,7 @@
                         <p class="script-desc">Script to automate making app structure. Website and Python are available.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/projectgenerator.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/projectgenerator.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-projectgen">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -112,7 +145,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="maintenance.sh" data-sudo="false" data-keywords="maintenance system cleanup repair menu interactive automate">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">maintenance.sh</span>
@@ -121,7 +154,7 @@
                         <p class="script-desc">Script to automate maintaining system. Complete with interactive menu.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/maintenance.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/maintenance.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-maintenance">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -129,7 +162,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="githelper.sh" data-sudo="false" data-keywords="githelper git helper github commit push repository interactive menu local">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">githelper.sh</span>
@@ -138,7 +171,7 @@
                         <p class="script-desc">Script to help maintaining git on local. Complete with interactive menu and push to remote repository.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/githelper.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/githelper.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-githelper">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -146,7 +179,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="laravelarch.sh" data-sudo="true" data-keywords="laravelarch laravel arch nginx mariadb web server environment setup sudo root">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">laravelarch.sh <span class="sudo-badge">sudo</span></span>
@@ -155,7 +188,7 @@
                         <p class="script-desc">Script to automate laravel environment. full with setup using nginx and mariadb.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/laravelarch.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/laravelarch.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-laravelarch">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -163,7 +196,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="nuser.sh" data-sudo="true" data-keywords="nuser user account create input password admin add user sudo root">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">nuser.sh <span class="sudo-badge">sudo</span></span>
@@ -172,7 +205,7 @@
                         <p class="script-desc">Script to create user via input. Complete with password input</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/nuser.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/nuser.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-nuser">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -180,7 +213,7 @@
                     </div>
                 </article>
 
-                <article class="script-card">
+                <article class="script-card" data-name="pkgbuilder.sh" data-sudo="false" data-keywords="pkgbuilder pkgbuild arch aur package build template input">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
                         <span class="script-name">pkgbuilder.sh</span>
@@ -189,7 +222,7 @@
                         <p class="script-desc">Script to create PKGBUILD script via input. Complete with build templates</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/pkgbuilder.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/pkgbuilder.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-pkgbuilder">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -197,16 +230,16 @@
                     </div>
                 </article>
                 
-                <article class="script-card">
+                <article class="script-card" data-name="killuser.sh" data-sudo="true" data-keywords="killuser user account delete terminate remove prompt confirmation sudo root">
                     <div class="card-header">
                         <i data-lucide="terminal" class="card-icon"></i>
-                        <span class="script-name">killuser.sh</span>
+                        <span class="script-name">killuser.sh <span class="sudo-badge">sudo</span></span>
                     </div>
                     <div class="card-body">
                         <p class="script-desc">Script to kill user accounts. Complete with confirmation prompts</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://github.com/RangS-1/Bashing/blob/main/killuser.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-sysmon">
+                        <a href="https://github.com/RangS-1/Bashing/blob/main/killuser.sh" target="_blank" rel="noopener noreferrer" class="github-btn" id="btn-killuser">
                             <i data-lucide="github"></i>
                             <span>View File</span>
                             <i data-lucide="arrow-up-right" class="arrow-icon"></i>
@@ -214,6 +247,27 @@
                     </div>
                 </article>
             </section>
+
+            <!-- Terminal Empty State when no search results match -->
+            <div id="no-results-state" class="no-results-card hidden">
+                <div class="no-results-prompt">
+                    <span class="prompt-user">rangs@archlinux</span><span class="prompt-char">:~$</span>
+                    <span class="command-text" id="no-results-cmd">grep "query" ./scripts/</span>
+                </div>
+                <div class="no-results-content">
+                    <i data-lucide="search-x" class="no-results-icon"></i>
+                    <h3>Script Not Found</h3>
+                    <p>There are no bash scripts matching the keyword "<span id="search-query-display"></span>".</p>
+                    <div class="search-tips">
+                        <span>Suggested Keywords:</span>
+                        <button class="tip-tag" data-tag="sudo">sudo</button>
+                        <button class="tip-tag" data-tag="updater">updater</button>
+                        <button class="tip-tag" data-tag="sysmon">sysmon</button>
+                        <button class="tip-tag" data-tag="git">git</button>
+                        <button class="tip-tag" data-tag="user">user</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Bottom Footer -->
@@ -263,7 +317,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="guide-section">
                     <h3 class="guide-heading"><i data-lucide="terminal"></i> Install via Git</h3>
                     <p class="guide-text">Copy and run the following command in your terminal:</p>

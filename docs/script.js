@@ -115,3 +115,169 @@ if (installBtn && installModal) {
     }
 }
 
+/* ==========================================================================
+   Search & Filter Engine Logic
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("script-search");
+    const clearBtn = document.getElementById("search-clear-btn");
+    const filterPills = document.querySelectorAll(".filter-pill");
+    const scriptCards = document.querySelectorAll(".script-card");
+    const visibleCountEl = document.getElementById("visible-count");
+    const noResultsCard = document.getElementById("no-results-state");
+    const noResultsCmd = document.getElementById("no-results-cmd");
+    const searchQueryDisplay = document.getElementById("search-query-display");
+    const tipTags = document.querySelectorAll(".tip-tag");
+
+    const countAllEl = document.getElementById("count-all");
+    const countSudoEl = document.getElementById("count-sudo");
+    const countUserEl = document.getElementById("count-user");
+
+    let currentFilter = "all";
+    let searchQuery = "";
+
+    // Calculate pill category totals dynamically
+    function updateCounts() {
+        let totalAll = scriptCards.length;
+        let totalSudo = 0;
+        let totalUser = 0;
+
+        scriptCards.forEach(card => {
+            const isSudo = card.getAttribute("data-sudo") === "true";
+            if (isSudo) {
+                totalSudo++;
+            } else {
+                totalUser++;
+            }
+        });
+
+        if (countAllEl) countAllEl.textContent = totalAll;
+        if (countSudoEl) countSudoEl.textContent = totalSudo;
+        if (countUserEl) countUserEl.textContent = totalUser;
+    }
+
+    updateCounts();
+
+    // Core Filtering Logic
+    function applyFilter() {
+        searchQuery = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+        // Toggle clear search button visibility
+        if (clearBtn) {
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove("hidden");
+            } else {
+                clearBtn.classList.add("hidden");
+            }
+        }
+
+        let visibleCount = 0;
+
+        scriptCards.forEach(card => {
+            const name = (card.getAttribute("data-name") || "").toLowerCase();
+            const isSudo = card.getAttribute("data-sudo") === "true";
+            const keywords = (card.getAttribute("data-keywords") || "").toLowerCase();
+            const desc = (card.querySelector(".script-desc")?.textContent || "").toLowerCase();
+
+            // Category match check
+            let matchesCategory = true;
+            if (currentFilter === "sudo") {
+                matchesCategory = isSudo;
+            } else if (currentFilter === "user") {
+                matchesCategory = !isSudo;
+            }
+
+            // Search query match check
+            let matchesSearch = true;
+            if (searchQuery.length > 0) {
+                const searchTerms = searchQuery.split(/\s+/);
+                matchesSearch = searchTerms.every(term => {
+                    if (term === "sudo") return isSudo || name.includes("sudo") || desc.includes("sudo") || keywords.includes("sudo");
+                    if (term === "user") return !isSudo || name.includes("user") || desc.includes("user") || keywords.includes("user");
+                    return name.includes(term) || desc.includes(term) || keywords.includes(term);
+                });
+            }
+
+            if (matchesCategory && matchesSearch) {
+                card.classList.remove("filtered-out");
+                visibleCount++;
+            } else {
+                card.classList.add("filtered-out");
+            }
+        });
+
+        // Update counter
+        if (visibleCountEl) visibleCountEl.textContent = visibleCount;
+
+        // Show/Hide Empty State
+        if (noResultsCard) {
+            if (visibleCount === 0) {
+                noResultsCard.classList.remove("hidden");
+                const queryText = searchQuery || currentFilter;
+                if (searchQueryDisplay) searchQueryDisplay.textContent = queryText;
+                if (noResultsCmd) noResultsCmd.textContent = `grep "${queryText}" ./scripts/`;
+            } else {
+                noResultsCard.classList.add("hidden");
+            }
+        }
+    }
+
+    // Input Search Listener
+    if (searchInput) {
+        searchInput.addEventListener("input", applyFilter);
+    }
+
+    // Clear Button Listener
+    if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+            if (searchInput) {
+                searchInput.value = "";
+                searchInput.focus();
+            }
+            applyFilter();
+        });
+    }
+
+    // Filter Pills Listener
+    filterPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            filterPills.forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+            currentFilter = pill.getAttribute("data-filter") || "all";
+            applyFilter();
+        });
+    });
+
+    // Tip Tags (Quick search recommendation click)
+    tipTags.forEach(tag => {
+        tag.addEventListener("click", () => {
+            const tagValue = tag.getAttribute("data-tag") || tag.textContent.trim();
+            if (searchInput) {
+                searchInput.value = tagValue;
+                searchInput.focus();
+            }
+            // Switch filter pill back to all for broad search
+            filterPills.forEach(p => p.classList.remove("active"));
+            const allPill = document.querySelector('.filter-pill[data-filter="all"]');
+            if (allPill) allPill.classList.add("active");
+            currentFilter = "all";
+            applyFilter();
+        });
+    });
+
+    // Keyboard Shortcut: press '/' to focus search input, 'Esc' to clear focus
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "/" && document.activeElement !== searchInput) {
+            // Prevent typing '/' into active inputs or textareas
+            if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+            e.preventDefault();
+            if (searchInput) searchInput.focus();
+        } else if (e.key === "Escape" && document.activeElement === searchInput) {
+            searchInput.value = "";
+            searchInput.blur();
+            applyFilter();
+        }
+    });
+});
+
+
