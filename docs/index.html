@@ -225,6 +225,110 @@
         </footer>
     </div>
 
+    <!-- Floating Email Button for Installation Guide -->
+    <button id="install-guide-btn" class="floating-mail-btn" aria-label="How to Install" title="How to Install">
+        <i data-lucide="mail" class="mail-icon"></i>
+        <span class="btn-tooltip">Installation</span>
+    </button>
+
+    <!-- Terminal Installation Guide Modal -->
+    <dialog id="install-modal" class="terminal-modal" closedby="any" aria-labelledby="modal-title">
+        <div class="modal-terminal-wrapper">
+            <!-- Terminal Header -->
+            <header class="terminal-header modal-header">
+                <div class="terminal-dots">
+                    <button class="dot close" id="modal-close-dot" title="Close modal" aria-label="Tutup Modal"></button>
+                    <span class="dot minimize"></span>
+                    <span class="dot maximize"></span>
+                </div>
+                <div class="terminal-title" id="modal-title">rangs@archlinux: ~/README.md</div>
+                <button class="modal-close-x" id="modal-close-x" title="Close" aria-label="Close">&times;</button>
+            </header>
+
+            <!-- Terminal Body -->
+            <div class="terminal-modal-body">
+                <div class="terminal-prompt-line">
+                    <span class="prompt-user">rangs@archlinux</span><span class="prompt-char">:~$</span>
+                    <span class="command-text">./README.md</span>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="guide-heading"><i data-lucide="terminal"></i> Install via AUR</h3>
+                    <p class="guide-text">If you have aur helper installed, run the following command:</p>
+                    <div class="code-box">
+                        <code id="quick-install-code">yay -S bashing</code>
+                        <button class="copy-btn" id="copy-quick-btn" title="Copy to clipboard">
+                            <i data-lucide="copy"></i>
+                            <span class="copy-text">Copy</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="guide-section">
+                    <h3 class="guide-heading"><i data-lucide="terminal"></i> Install via Git</h3>
+                    <p class="guide-text">Copy and run the following command in your terminal:</p>
+                    <div class="code-box">
+                        <code id="quick-install-code">git clone https://github.com/RangS-1/Bashing.git && cd Bashing && chmod +x *.sh</code>
+                        <button class="copy-btn" id="copy-quick-btn" title="Copy to clipboard">
+                            <i data-lucide="copy"></i>
+                            <span class="copy-text">Copy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="guide-heading"><i data-lucide="list-checks"></i> Installation Steps</h3>
+                    <ol class="steps-list">
+                        <li>
+                            <span class="step-num">1.</span>
+                            <div class="step-content">
+                                <strong>Clone GitHub Repository:</strong>
+                                <pre>git clone https://github.com/RangS-1/Bashing.git</pre>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="step-num">2.</span>
+                            <div class="step-content">
+                                <strong>Enter Project Directory:</strong>
+                                <pre>cd Bashing</pre>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="step-num">3.</span>
+                            <div class="step-content">
+                                <strong>Give Execution Permissions to Scripts:</strong>
+                                <pre>chmod +x *.sh</pre>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="step-num">4.</span>
+                            <div class="step-content">
+                                <strong>Run Your Selected Script:</strong>
+                                <pre>./sysmon.sh</pre>
+                                <span class="step-note">* For system scripts (like <code>updater.sh</code> / <code>laravelarch.sh</code>), run with <code>sudo</code>:</span>
+                                <pre>sudo ./updater.sh</pre>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="guide-heading"><i data-lucide="cpu"></i> System Requirements (Requirements)</h3>
+                    <ul class="req-list">
+                        <li><i data-lucide="check-circle-2" class="check-icon"></i> <strong>OS:</strong> Arch Linux / Ubuntu / Debian / Fedora / Other Linux</li>
+                        <li><i data-lucide="check-circle-2" class="check-icon"></i> <strong>Shell:</strong> Bash 4.0+</li>
+                        <li><i data-lucide="check-circle-2" class="check-icon"></i> <strong>Dependencies:</strong> <code>git</code>, <code>bash</code>, <code>curl</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-footer-line">
+                    <span class="prompt-user">rangs@archlinux</span><span class="prompt-char">:~$</span>
+                    <span class="footer-hint">Tekan <kbd>ESC</kbd> atau klik tombol merah untuk menutup</span>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <!-- Script Execution -->
     <script src="script.js"></script>
     <script>
